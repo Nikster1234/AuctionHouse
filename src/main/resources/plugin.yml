@@ -1,0 +1,35 @@
+name: DonutAuctionHouse
+version: 1.0.0
+main: bg.nikol.auctionhouse.AuctionHousePlugin
+api-version: '1.21'
+author: nikol
+softdepend: [Vault]
+
+commands:
+  ah:
+    description: Open Donut-style Auction House
+    usage: /ah
+    aliases: [auctionhouse, auction]
+
+permissions:
+  auctionhouse.use:
+    default: true
+  auctionhouse.sell:
+    default: true
+  auctionhouse.buy:
+    default: true
+  auctionhouse.unlimited:
+    default: op
+  auctionhouse.admin:
+    default: op
+
+  donutauction.use:
+    default: true
+  donutauction.sell:
+    default: true
+  donutauction.buy:
+    default: true
+  donutauction.unlimited:
+    default: op
+  donutauction.admin:
+    default: op

@@ -1,0 +1,17 @@
+# Donut-style Auction House settings
+currency-symbol: "$"
+currency-format: "#,##0.##"
+
+# Maximum active listings per player (unless player has auctionhouse.unlimited)
+max-listings-per-player: 20
+
+# Price bounds for /ah sell
+min-price: 1
+max-price: 1000000000
+
+# Listing lifetime (supports s, m, h, d)
+auction-duration: "48h"
+
+files:
+  listings-file: "auctions.yml"
+  expired-file: "expired.yml"
