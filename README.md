@@ -13,6 +13,17 @@ Paper `1.21.11` auction house plugin with a DonutSMP-style market GUI, Vault eco
 - YAML-backed persistence
 - Vault economy integration
 
+## Requirements
+
+- Paper `1.21.11`
+- Java `21`
+- Vault
+- an economy provider such as EssentialsX Economy or CMI
+
+Important:
+- the plugin depends on a working Vault economy provider at startup
+- if Vault is missing or no economy provider is registered, the plugin disables itself
+
 ## Commands
 
 - `/ah`
@@ -23,13 +34,22 @@ Paper `1.21.11` auction house plugin with a DonutSMP-style market GUI, Vault eco
 - `/ah claim`
 - `/ah reload`
 
+Aliases:
+- `/auctionhouse`
+- `/auction`
+
 ## Permissions
 
 - `auctionhouse.use`
+  - Open the auction house GUI and basic player usage.
 - `auctionhouse.sell`
+  - Create listings with `/ah sell <price>`.
 - `auctionhouse.buy`
+  - Buy items from the GUI.
 - `auctionhouse.unlimited`
+  - Bypass the normal listing cap.
 - `auctionhouse.admin`
+  - Reload the plugin and use admin-level actions.
 
 Compatibility aliases are also included:
 
@@ -39,27 +59,63 @@ Compatibility aliases are also included:
 - `donutauction.unlimited`
 - `donutauction.admin`
 
-## Requirements
+## Economy Setup
 
-- Paper `1.21.11`
-- Java `21`
-- Vault
-- an economy provider such as EssentialsX Economy or CMI
+Recommended server-side setup:
+
+1. Install `Vault`.
+2. Install one supported economy plugin, for example `EssentialsX Economy` or `CMI`.
+3. Start the server and confirm the economy plugin is loaded before AuctionHouse.
+4. Add the AuctionHouse jar to `plugins/`.
+5. Start the server again and verify the plugin stays enabled.
+
+What the plugin uses Vault for:
+- checking whether the buyer has enough balance
+- withdrawing money on purchase
+- depositing money to the seller
+- refunding the buyer if seller payout fails
 
 ## Configuration
 
-Main settings live in `src/main/resources/config.yml`.
+Main settings live in [src/main/resources/config.yml](src/main/resources/config.yml).
 
-- `currency-symbol`: symbol shown in menus and messages
-- `currency-format`: number format pattern
-- `max-listings-per-player`: listing cap without unlimited permission
-- `min-price` / `max-price`: sell price limits
-- `auction-duration`: listing lifetime such as `48h`
+### Main Options
+
+- `currency-symbol`
+  - Symbol shown in GUI text and messages. Default: `$`
+- `currency-format`
+  - Java number format pattern used for prices. Default: `#,##0.##`
+- `max-listings-per-player`
+  - Maximum active listings per player unless they have `auctionhouse.unlimited`. Default: `20`
+- `min-price`
+  - Lowest allowed sell price. Default: `1`
+- `max-price`
+  - Highest allowed sell price. Default: `1000000000`
+- `auction-duration`
+  - Listing lifetime. Supports `s`, `m`, `h`, and `d`. Default: `48h`
+
+### Data File Options
+
+- `files.listings-file`
+  - File used for active listings. Default: `auctions.yml`
+- `files.expired-file`
+  - File used for expired listings waiting to be claimed. Default: `expired.yml`
+
+### Runtime Data
 
 Runtime data is stored in:
 
 - `auctions.yml`
 - `expired.yml`
+
+## Install
+
+1. Build the plugin with Maven.
+2. Copy `target/donut-auction-house-1.0.0.jar` into your server `plugins/` folder.
+3. Install Vault and an economy provider.
+4. Start the server once so the plugin can generate its config and data files.
+5. Adjust the generated config if needed.
+6. Reload the plugin with `/ah reload` or restart the server.
 
 ## Build
 
@@ -73,20 +129,19 @@ Output:
 
 - `target/donut-auction-house-1.0.0.jar`
 
-## Install
-
-1. Build the plugin with Maven.
-2. Copy `target/donut-auction-house-1.0.0.jar` into your server `plugins/` folder.
-3. Install Vault and an economy provider.
-4. Start or restart the server.
-5. Adjust the generated plugin config if needed.
-
 ## Project Structure
 
-- `src/main/java/bg/nikol/auctionhouse/` core plugin logic
-- `src/main/resources/` plugin metadata and defaults
-- `pom.xml` Maven build configuration
+- `src/main/java/bg/nikol/auctionhouse/`
+  - Core plugin logic, command handling, GUI flow, persistence, and listeners.
+- `src/main/resources/`
+  - Plugin metadata and default configuration.
+- `pom.xml`
+  - Maven build configuration with Paper and VaultAPI as provided dependencies.
 
 ## Status
 
 The repo is source-only. Built `.jar` files, Maven output, and portable toolchains are intentionally excluded from version control.
+
+## License
+
+MIT
