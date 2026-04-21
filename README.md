@@ -24,6 +24,23 @@ Important:
 - the plugin depends on a working Vault economy provider at startup
 - if Vault is missing or no economy provider is registered, the plugin disables itself
 
+## Quick Start
+
+Recommended first-time setup:
+
+1. Install `Vault`.
+2. Install one economy plugin such as `EssentialsX Economy` or `CMI`.
+3. Build the plugin jar with Maven.
+4. Copy `target/donut-auction-house-1.0.0.jar` into `plugins/`.
+5. Start the server and confirm the plugin stays enabled.
+6. Run `/ah` in-game to verify the GUI opens correctly.
+7. Test a full flow:
+   - list an item with `/ah sell <price>`
+   - buy it from another account
+   - check expired storage with `/ah expired` and `/ah claim`
+
+If the plugin disables itself during startup, check Vault first and confirm that your economy provider is loaded before AuctionHouse.
+
 ## Commands
 
 - `/ah`
@@ -128,6 +145,13 @@ mvn clean package
 Output:
 
 - `target/donut-auction-house-1.0.0.jar`
+
+## Project Metadata
+
+- [pom.xml](pom.xml)
+  - Maven artifact metadata, dependency declarations, Java toolchain target, and repository information.
+- [src/main/resources/plugin.yml](src/main/resources/plugin.yml)
+  - Bukkit command, permission, and plugin metadata used by Paper at runtime.
 
 ## Project Structure
 

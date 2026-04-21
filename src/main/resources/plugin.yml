@@ -3,6 +3,8 @@ version: 1.0.0
 main: bg.nikol.auctionhouse.AuctionHousePlugin
 api-version: '1.21'
 author: nikol
+description: DonutSMP-style Paper auction house plugin with Vault economy support.
+website: https://github.com/Nikster1234/AuctionHouse
 softdepend: [Vault]
 
 commands:
